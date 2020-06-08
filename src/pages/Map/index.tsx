@@ -1,36 +1,97 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Map as MapLeaflet, TileLayer, Marker } from 'react-leaflet';
-import { LeafletMouseEvent } from 'leaflet';
-import './styles.css';
+// import { LeafletMouseEvent } from 'leaflet';
+import { findNearest } from 'geolib';
 
-// LatLng: -3.8617658287851437,-38.643180727958686
+import './styles.css';
+import quatrains from '../../database/quatrain_allotments.json';
+
+interface Allotment {
+  name: string;
+  latitude: number;
+  longitude: number;
+}
+
+interface Quatrain {
+  name: string;
+  allotments: Allotment[];
+}
+
+const allotments = quatrains.map((quatrain) => quatrain.allotments).flat();
 
 const Map: React.FC = () => {
-  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([
+  const [currentPosition, setCurrentPosition] = useState<[number, number]>([
     0,
     0,
   ]);
+  const [currentAllotment, setCurrentAllotment] = useState<Allotment>(
+    {} as Allotment
+  );
+  const [currentQuatrain, setCurrentQuatrain] = useState<Quatrain | undefined>(
+    {} as Quatrain
+  );
+
+  const handleWatchPositionSuccess: PositionCallback = useCallback(
+    (position) => {
+      const { latitude, longitude } = position.coords;
+      setCurrentPosition([latitude, longitude]);
+
+      const allotment = findNearest(
+        { latitude, longitude },
+        allotments
+      ) as Allotment;
+
+      const quatrain = quatrains.find((quatrain) => {
+        return quatrain.allotments.includes(allotment);
+      });
+
+      setCurrentQuatrain(quatrain);
+      setCurrentAllotment(allotment);
+    },
+    []
+  );
+
+  const handleWatchPositionError: PositionErrorCallback = useCallback(
+    (error) => {
+      console.warn('ERRO(' + error.code + '): ' + error.message);
+    },
+    []
+  );
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
-      setSelectedPosition([latitude, longitude]);
-    });
-  }, []);
+    const watchPositionOptions = {
+      enableHighAccuracy: true,
+      timeout: Infinity,
+      maximumAge: 0,
+    };
 
-  function handleMapClick(event: LeafletMouseEvent) {
-    console.log([event.latlng.lat, event.latlng.lng]);
-    setSelectedPosition([event.latlng.lat, event.latlng.lng]);
-  }
+    const whatchId = navigator.geolocation.watchPosition(
+      handleWatchPositionSuccess,
+      handleWatchPositionError,
+      watchPositionOptions
+    );
+
+    return function clearWhatchPosition() {
+      navigator.geolocation.clearWatch(whatchId);
+    };
+  }, [handleWatchPositionError, handleWatchPositionSuccess]);
+
+  // function handleMapClick(event: LeafletMouseEvent) {
+  //   setCurrentPosition([event.latlng.lat, event.latlng.lng]);
+  // }
 
   return (
     <div className="map">
-      <MapLeaflet center={selectedPosition} zoom={15} onclick={handleMapClick}>
+      <div className="mapFooter">
+        <div className="currentPositionInfo">{`Você está: ${currentQuatrain?.name} / ${currentAllotment.name}`}</div>
+      </div>
+
+      <MapLeaflet center={currentPosition} zoom={18} onclick={() => {}}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={selectedPosition} />
+        <Marker position={currentPosition} />
       </MapLeaflet>
     </div>
   );

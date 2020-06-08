@@ -1,0 +1,97 @@
+[
+  {
+    "name": "Quadra 14",
+    "allotments": [
+      {
+        "name": "Lote 1",
+        "latitude": -3.861862,
+        "longitude": -38.642831
+      },
+      {
+        "name": "Lote 2",
+        "latitude": -3.861828,
+        "longitude": -38.642931
+      },
+      {
+        "name": "Lote 3",
+        "latitude": -3.861801,
+        "longitude": -38.643017
+      },
+      {
+        "name": "Lote 4",
+        "latitude": -3.861758,
+        "longitude": -38.643104
+      },
+      {
+        "name": "Lote 5",
+        "latitude": -3.861725,
+        "longitude": -38.643175
+      },
+      {
+        "name": "Lote 6",
+        "latitude": -3.861699,
+        "longitude": -38.643288
+      },
+      {
+        "name": "Lote 7",
+        "latitude": -3.861640,
+        "longitude": -38.643355
+      },
+      {
+        "name": "Lote 8",
+        "latitude": -3.861591,
+        "longitude": -38.643431
+      },
+      {
+        "name": "Lote 9",
+        "latitude": -3.861540,
+        "longitude": -38.643512
+      },
+      {
+        "name": "Lote 10",
+        "latitude": -3.861483,
+        "longitude": -38.643588
+      },
+      {
+        "name": "Lote 11",
+        "latitude": -3.861433,
+        "longitude": -38.643673
+      },
+      {
+        "name": "Lote 12",
+        "latitude": -3.861388,
+        "longitude": -38.643742
+      },
+      {
+        "name": "Lote 13",
+        "latitude": -3.861332,
+        "longitude": -38.643824
+      },
+      {
+        "name": "Lote 14",
+        "latitude": -3.861270,
+        "longitude": -38.643902
+      },
+      {
+        "name": "Lote 15",
+        "latitude": -3.861193,
+        "longitude": -38.643986
+      },
+      {
+        "name": "Lote 16",
+        "latitude": -3.861114,
+        "longitude": -38.644068
+      }
+    ]
+  },
+  {
+    "name": "Quadra 13",
+    "allotments": [
+      {
+        "name": "Lote 2",
+        "latitude": -3.861495,
+        "longitude": -38.642697
+      }
+    ]
+  }
+]
