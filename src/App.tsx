@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
-// import Routes from './routes';
-import Map from './pages/Map';
+import Routes from './routes';
 
 function App() {
-  return <Map />;
+  return <Routes />;
 }
 
 export default App;
