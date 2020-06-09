@@ -1,23 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Map as MapLeaflet, TileLayer, Marker } from 'react-leaflet';
 // import { LeafletMouseEvent } from 'leaflet';
-import { findNearest } from 'geolib';
 
 import './styles.css';
-import quatrains from '../../database/quatrain_allotments.json';
-
-interface Allotment {
-  name: string;
-  latitude: number;
-  longitude: number;
-}
-
-interface Quatrain {
-  name: string;
-  allotments: Allotment[];
-}
-
-const allotments = quatrains.map((quatrain) => quatrain.allotments).flat();
+import { Allotment, Quatrain } from './types';
+import {
+  getNearestAllotment,
+  getQuatrainByAllotment,
+  isPointInsideCondominium,
+} from './geoFunctions';
 
 const Map: React.FC = () => {
   const [currentPosition, setCurrentPosition] = useState<[number, number]>([
@@ -34,19 +25,16 @@ const Map: React.FC = () => {
   const handleWatchPositionSuccess: PositionCallback = useCallback(
     (position) => {
       const { latitude, longitude } = position.coords;
-      setCurrentPosition([latitude, longitude]);
 
-      const allotment = findNearest(
-        { latitude, longitude },
-        allotments
-      ) as Allotment;
+      if (isPointInsideCondominium({ latitude, longitude })) {
+        setCurrentPosition([latitude, longitude]);
 
-      const quatrain = quatrains.find((quatrain) => {
-        return quatrain.allotments.includes(allotment);
-      });
+        const allotment = getNearestAllotment({ latitude, longitude });
+        const quatrain = getQuatrainByAllotment(allotment);
 
-      setCurrentQuatrain(quatrain);
-      setCurrentAllotment(allotment);
+        setCurrentQuatrain(quatrain);
+        setCurrentAllotment(allotment);
+      }
     },
     []
   );
