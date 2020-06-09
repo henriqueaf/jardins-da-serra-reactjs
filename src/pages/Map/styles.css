@@ -15,7 +15,7 @@
   right: 0;
   display: flex;
   justify-content: center;
-  z-index: 450;
+  z-index: 1050;
 }
 
 .mapFooter .currentPositionInfo {
