@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/jardins-da-serra-reactjs/static/css/main.9753e00a.chunk.css",
+    "main.js": "/jardins-da-serra-reactjs/static/js/main.a2694121.chunk.js",
+    "main.js.map": "/jardins-da-serra-reactjs/static/js/main.a2694121.chunk.js.map",
+    "runtime-main.js": "/jardins-da-serra-reactjs/static/js/runtime-main.66aa3cbd.js",
+    "runtime-main.js.map": "/jardins-da-serra-reactjs/static/js/runtime-main.66aa3cbd.js.map",
+    "static/js/2.5aaae712.chunk.js": "/jardins-da-serra-reactjs/static/js/2.5aaae712.chunk.js",
+    "static/js/2.5aaae712.chunk.js.map": "/jardins-da-serra-reactjs/static/js/2.5aaae712.chunk.js.map",
+    "index.html": "/jardins-da-serra-reactjs/index.html",
+    "precache-manifest.55ecff287a4417c64c3d0f8742d03b8b.js": "/jardins-da-serra-reactjs/precache-manifest.55ecff287a4417c64c3d0f8742d03b8b.js",
+    "service-worker.js": "/jardins-da-serra-reactjs/service-worker.js",
+    "static/css/main.9753e00a.chunk.css.map": "/jardins-da-serra-reactjs/static/css/main.9753e00a.chunk.css.map",
+    "static/js/2.5aaae712.chunk.js.LICENSE.txt": "/jardins-da-serra-reactjs/static/js/2.5aaae712.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.66aa3cbd.js",
+    "static/js/2.5aaae712.chunk.js",
+    "static/css/main.9753e00a.chunk.css",
+    "static/js/main.a2694121.chunk.js"
+  ]
+}
