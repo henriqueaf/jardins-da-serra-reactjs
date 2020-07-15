@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Map as MapLeaflet, TileLayer, Marker } from 'react-leaflet';
-// import { LeafletMouseEvent } from 'leaflet';
+import { Marker } from 'react-google-maps';
 
 import './styles.css';
 import { Allotment, Quatrain } from './types';
@@ -9,12 +8,15 @@ import {
   getQuatrainByAllotment,
   isPointInsideCondominium,
 } from './geoFunctions';
+import MapComponent from '../../components/Map';
 
 const Map: React.FC = () => {
-  const [currentPosition, setCurrentPosition] = useState<[number, number]>([
-    0,
-    0,
-  ]);
+  const [currentPosition, setCurrentPosition] = useState<
+    google.maps.LatLngLiteral
+  >({
+    lat: 0,
+    lng: 0,
+  });
   const [currentAllotment, setCurrentAllotment] = useState<Allotment>(
     {} as Allotment
   );
@@ -27,7 +29,7 @@ const Map: React.FC = () => {
       const { latitude, longitude } = position.coords;
 
       if (isPointInsideCondominium({ latitude, longitude })) {
-        setCurrentPosition([latitude, longitude]);
+        setCurrentPosition({ lat: latitude, lng: longitude });
 
         const allotment = getNearestAllotment({ latitude, longitude });
         const quatrain = getQuatrainByAllotment(allotment);
@@ -64,23 +66,15 @@ const Map: React.FC = () => {
     };
   }, [handleWatchPositionError, handleWatchPositionSuccess]);
 
-  // function handleMapClick(event: LeafletMouseEvent) {
-  //   setCurrentPosition([event.latlng.lat, event.latlng.lng]);
-  // }
-
   return (
     <div className="map">
       <div className="mapFooter">
         <div className="currentPositionInfo">{`Você está: ${currentQuatrain?.name} / ${currentAllotment.name}`}</div>
       </div>
 
-      <MapLeaflet center={currentPosition} zoom={18} onclick={() => {}}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <MapComponent center={currentPosition}>
         <Marker position={currentPosition} />
-      </MapLeaflet>
+      </MapComponent>
     </div>
   );
 };
